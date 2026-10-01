@@ -185,16 +185,18 @@
   @media (max-width: 520px) {
     /* foto mais baixa no celular: 4:5 em tela cheia deixava cada imovel com uma tela e meia */
     .lista .imovel-foto img { aspect-ratio: 4 / 3; }
-    .lista { gap: 2.5rem; }
+    .lista .imovel-acoes { margin-bottom: 2.5rem; }
   }
   .filtros-rodape { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .75rem 1.5rem; }
   .resultado { color: var(--tinta-2); }
 
-  .lista { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 3rem 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+  .lista { list-style: none; margin: 2.5rem 0 0; padding: 0; display: grid; gap: 0 2rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
   .vazio { margin-top: 2.5rem; padding: 2rem; background: var(--campo); border-radius: var(--raio); }
   .vazio p + p { margin-top: .75rem; }
 
-  .imovel { display: flex; flex-direction: column; }
+  /* subgrid: foto, titulo, preco, ficha e botoes alinham na mesma altura em todos os cards da linha */
+  .imovel { display: grid; grid-template-rows: subgrid; grid-row: span 5; align-content: start; min-width: 0; }
+  .imovel > * { align-self: start; }
   .imovel-foto { position: relative; display: block; border-radius: var(--raio); overflow: hidden; background: var(--campo); }
   .imovel-foto img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform .5s ease; }
   .imovel-foto:hover img { transform: scale(1.03); }
@@ -216,9 +218,10 @@
   .ficha div { display: flex; align-items: baseline; }
   .ficha dt { flex: 1; display: flex; align-items: baseline; color: var(--tinta-2); }
   .ficha dt::after { content: ""; flex: 1; min-width: 1.5rem; margin: 0 .5rem; border-bottom: 2px dotted var(--pontos); transform: translateY(-.28em); }
-  .ficha dd { margin: 0; font-weight: 600; text-align: right; }
+  .ficha dd { margin: 0; font-weight: 600; text-align: right; white-space: nowrap; }
 
-  .imovel-acoes { display: flex; gap: .5rem; margin-top: auto; padding-top: 1.25rem; }
+  .imovel-acoes { display: flex; gap: .5rem; padding-top: 1.25rem; margin-bottom: 3rem; }
+  .imovel > .imovel-acoes { align-self: end; }
   .imovel-acoes .btn { flex: 1; }
   .salvar {
     display: inline-flex; align-items: center; justify-content: center; gap: .4rem; min-width: 48px; min-height: 48px; padding: 0 .9rem;
@@ -247,6 +250,7 @@
   .bandeja .btn { min-height: 44px; border-radius: 999px; background: var(--papel); color: var(--tinta); border-color: var(--papel); white-space: nowrap; }
   .bandeja .btn:hover { background: var(--campo); border-color: var(--campo); }
   .bandeja-texto { white-space: nowrap; }
+  .com-salvos .rodape { padding-bottom: 7rem; }   /* a bandeja nao cobre o rodape */
   @media (prefers-reduced-motion: reduce) { .bandeja { transition: none; } }
 
   /* ---------- ficha completa (dialogo) ---------- */
@@ -312,7 +316,7 @@
 
   /* ---------- avaliacao ---------- */
   .avaliacao { background: var(--campo); padding-block: clamp(3rem, 7vw, 5.5rem); }
-  .avaliacao-grade { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 5rem); }
+  .avaliacao-grade { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; }
   .avaliacao-intro { display: grid; gap: 1rem; align-content: start; }
   .avaliacao-intro p { color: var(--tinta-2); max-width: 44ch; }
   .servicos { list-style: none; padding: 0; margin: .5rem 0 0; display: grid; gap: 0; }
@@ -358,8 +362,15 @@
 
   /* ---------- rodape ---------- */
   .rodape { background: var(--campo); padding-block: 2.5rem; font-size: .95rem; color: var(--tinta-2); }
-  .rodape-grade { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem; }
-  .rodape p + p { margin-top: .25rem; }
+  .rodape-grade { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1.5rem 3rem; }
+  .rodape-marca { display: grid; gap: .9rem; justify-items: start; }
+  .rodape-dados { display: grid; gap: .6rem; justify-items: end; text-align: right; }
+  .insta { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; font-weight: 500; }
+  .insta svg { width: 1.4rem; height: 1.4rem; flex: none; }
+  @media (max-width: 700px) {
+    .rodape-grade { flex-direction: column; align-items: center; text-align: center; }
+    .rodape-marca, .rodape-dados { justify-items: center; text-align: center; }
+  }
 
   /* ---------- barra fixa do celular ---------- */
   .barra { display: none; }
@@ -546,21 +557,27 @@
         </div>
       </div>
       <iframe class="mapa" title="Mapa: Carvalho e Otero Imóveis na Rua Fernando de Campos Rosa, Cravinhos" loading="lazy"
-        src="https://www.google.com/maps?q=-21.3389159,-47.7440558&z=17&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        src="https://maps.google.com/maps?q=-21.3389159,-47.7440558&hl=pt-BR&z=17&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </section>
 </main>
 
 <footer class="rodape">
   <div class="envoltorio rodape-grade">
-    <a class="marca" href="#topo" aria-label="Carvalho e Otero Imóveis, voltar ao início" translate="no">
-      <span class="marca-nome">Carvalho e Otero</span>
-      <span class="marca-filete" aria-hidden="true"></span>
-      <span class="marca-sub">Imóveis</span>
-    </a>
-    <div>
-      <p>Carvalho e Otero Imóveis Ltda. CNPJ 47.364.887/0001-60. CRECI-SP 041475-J.</p>
-      <p><a href="https://www.instagram.com/carvalhoeoteroimoveis/" target="_blank" rel="noopener">Instagram @carvalhoeoteroimoveis</a></p>
+    <div class="rodape-marca">
+      <a class="marca" href="#topo" aria-label="Carvalho e Otero Imóveis, voltar ao início" translate="no">
+        <span class="marca-nome">Carvalho e Otero</span>
+        <span class="marca-filete" aria-hidden="true"></span>
+        <span class="marca-sub">Imóveis</span>
+      </a>
+      <p>© 2026 Carvalho e Otero Imóveis. Todos os direitos reservados.</p>
+    </div>
+    <div class="rodape-dados">
+      <a class="insta" href="https://www.instagram.com/carvalhoeoteroimoveis/" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+        @carvalhoeoteroimoveis
+      </a>
+      <p>CNPJ 47.364.887/0001-60<br>CRECI-SP 041475-J</p>
     </div>
   </div>
 </footer>
@@ -664,7 +681,7 @@ const IMOVEIS = [
     publicado: "2026-08-19", dormitorios: 2,
     fotos: [{ src: "img/casa-alvorada-alugada.webp", w: 336, h: 420, alt: "Fundos da casa com porta de vidro e quintal cimentado" }],
     fotosFaltando: [],
-    ficha: [["Dormitórios", "2"], ["Banheiro", "1"], ["Garagem", "ampla, descoberta"]],
+    ficha: [["Dormitórios", "2"], ["Banheiro", "1"], ["Garagem", "descoberta"]],
     descricao: "Alugada em agosto de 2026.",
   },
 ];
@@ -708,6 +725,7 @@ function atualizarBandeja() {
   const lista = IMOVEIS.filter((im) => salvos.has(im.id));
   const b = $("#bandeja");
   b.hidden = lista.length === 0;
+  document.body.classList.toggle("com-salvos", lista.length > 0);
   $("#bandeja-texto").textContent = lista.length === 1 ? "1 imóvel salvo" : `${lista.length} imóveis salvos`;
   const texto = "Olá! Separei estes imóveis no site e queria saber mais:\n\n" +
     lista.map((im) => `• ${im.titulo}, ${precoTexto(im)} ${im.precoNota}\n  ${linkDe(im)}`).join("\n");
