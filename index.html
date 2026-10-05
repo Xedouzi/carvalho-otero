@@ -213,7 +213,7 @@
   @media (prefers-reduced-motion: reduce) { .segmentos span { transition: none; } }
 
   /* ---------- catalogo ---------- */
-  .catalogo { padding-block: clamp(3rem, 7vw, 5rem) 2rem; }
+  .catalogo { padding-block: clamp(3rem, 7vw, 5rem); }
   .catalogo-cabeca { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .5rem 2rem; }
   .catalogo-cabeca p { color: var(--tinta-2); }
   .filtros { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; margin-top: 1.75rem; padding: 1.25rem; background: var(--nevoa); border-radius: var(--raio); }
@@ -383,7 +383,7 @@
   .simulador-nota { font-size: .85rem; color: var(--tinta-2); }
 
   /* ---------- lancamento ---------- */
-  .lancamento { background: var(--nevoa); padding-block: clamp(3rem, 7vw, 5rem); margin-top: 3rem; }
+  .lancamento { background: var(--nevoa); padding-block: clamp(3rem, 7vw, 5rem); }
   .lancamento-grade { display: grid; grid-template-columns: minmax(0, min(380px, 40%)) minmax(0, 1fr); gap: clamp(1.5rem, 5vw, 4rem); align-items: center; }
   .lancamento img { border-radius: var(--raio); aspect-ratio: 1; object-fit: cover; width: 100%; }
   .lancamento-texto { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; max-width: 37.8em; min-width: 0; }
@@ -560,6 +560,23 @@
 </section>
 
 <main>
+  <section class="lancamento" aria-labelledby="titulo-carmelo">
+    <div class="envoltorio lancamento-grade">
+      <img src="img/carmelo.webp" width="640" height="640" loading="lazy" alt="Arte do lançamento Jardim Carmelo, bairro planejado com lotes residenciais e comerciais">
+      <div class="lancamento-texto">
+        <h2 id="titulo-carmelo">Jardim Carmelo, bairro planejado</h2>
+        <p>Lançamento ao lado do Jardim das Acácias, com lotes residenciais e uma área comercial integrada. Participamos da comercialização dos lotes.</p>
+        <dl class="ficha">
+          <div><dt>A partir de</dt><dd><span class="a-preencher">R$ 99 mil</span></dd></div>
+          <div><dt>Tamanho</dt><dd><span class="a-preencher">a confirmar</span></dd></div>
+          <div><dt>Disponíveis</dt><dd><span class="a-preencher">a confirmar</span></dd></div>
+          <!-- R$ 99 mil e o valor do post de abr/2025: conferir se ainda vale -->
+        </dl>
+        <p><a class="btn" id="zap-carmelo" href="#">Consultar lotes disponíveis</a></p>
+      </div>
+    </div>
+  </section>
+
   <section class="catalogo envoltorio" id="imoveis" aria-labelledby="titulo-imoveis">
     <div class="catalogo-cabeca">
       <h2 id="titulo-imoveis" tabindex="-1">Imóveis disponíveis</h2>
@@ -594,23 +611,6 @@
       <p>Informe o que você procura e avisaremos quando houver um imóvel compatível. <a id="vazio-zap" href="#">Falar com um corretor</a></p>
     </div>
     <noscript><p class="vazio">Para ver os imóveis, ligue (16) 3951-7020 ou chame no WhatsApp (16) 99312-5005.</p></noscript>
-  </section>
-
-  <section class="lancamento" aria-labelledby="titulo-carmelo">
-    <div class="envoltorio lancamento-grade">
-      <img src="img/carmelo.webp" width="640" height="640" loading="lazy" alt="Arte do lançamento Jardim Carmelo, bairro planejado com lotes residenciais e comerciais">
-      <div class="lancamento-texto">
-        <h2 id="titulo-carmelo">Jardim Carmelo, bairro planejado</h2>
-        <p>Lançamento ao lado do Jardim das Acácias, com lotes residenciais e uma área comercial integrada. Participamos da comercialização dos lotes.</p>
-        <dl class="ficha">
-          <div><dt>A partir de</dt><dd><span class="a-preencher">R$ 99 mil</span></dd></div>
-          <div><dt>Tamanho</dt><dd><span class="a-preencher">a confirmar</span></dd></div>
-          <div><dt>Disponíveis</dt><dd><span class="a-preencher">a confirmar</span></dd></div>
-          <!-- R$ 99 mil e o valor do post de abr/2025: conferir se ainda vale -->
-        </dl>
-        <p><a class="btn" id="zap-carmelo" href="#">Consultar lotes disponíveis</a></p>
-      </div>
-    </div>
   </section>
 
   <section class="avaliacao" id="avaliacao" aria-labelledby="titulo-avaliacao">
