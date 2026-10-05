@@ -1106,6 +1106,7 @@ const geral = zap("Olá! Vim pelo site da Carvalho e Otero e gostaria de falar c
 ["#zap-contato", "#zap-barra"].forEach((s) => { $(s).href = geral; $(s).target = "_blank"; $(s).rel = "noopener"; });
 $("#zap-carmelo").href = zap("Olá! Gostaria de informações sobre os lotes do Jardim Carmelo: disponibilidade e valores.");
 $("#zap-carmelo").target = "_blank";
+$("#zap-carmelo").rel = "noopener";
 $("#vazio-zap").href = geral;
 $("#form-avaliar").addEventListener("input", (e) => e.target.setCustomValidity?.(""));
 $("#filtros").addEventListener("submit", (e) => e.preventDefault());
