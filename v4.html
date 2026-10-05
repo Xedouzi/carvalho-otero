@@ -189,6 +189,7 @@
   .busca .btn svg { fill: none; stroke: currentColor; stroke-width: 2.2; }
   .abertura-extra { color: #EEF3F8; font-size: 1.05rem; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
   .abertura-extra a { color: #fff; font-weight: 600; white-space: nowrap; }
+  @media (max-width: 480px) { .abertura-extra a { white-space: normal; } }
   @media (max-width: 920px) {
     .busca { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
     .busca-quero { grid-column: 1 / -1; }
@@ -419,6 +420,11 @@
   .sobre-texto { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.1rem; max-width: 37.8em; }
   .sobre-texto p { font-size: 1.1rem; }
   .sobre-texto .creci { color: var(--tinta-2); font-size: 1rem; }
+  /* 2 colunas quando cabe; com tela estreita ou fonte grande vira 1 */
+  .sobre-servicos { list-style: none; margin: .25rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13em), 1fr)); gap: 0 2rem; }
+  .sobre-servicos li { display: grid; gap: .2rem; padding-block: .9rem; border-top: 1px solid var(--nevoa-2); min-width: 0; }
+  .sobre-servicos strong { font-weight: 600; color: var(--tinta); }
+  .sobre-servicos span { color: var(--tinta-2); }
   @media (max-width: 760px) { .sobre-grade { grid-template-columns: 1fr; } .vaga-retrato { max-width: 380px; aspect-ratio: 4 / 3; } }
 
   /* ---------- contato ---------- */
@@ -429,7 +435,21 @@
   .contato-dados a.grande { font: 400 clamp(1.8rem, 1.3rem + 1.6vw, 2.5rem)/1.2 var(--titulo); text-decoration: none; display: inline-flex; align-items: center; min-height: 48px; }
   .contato-dados a.grande:hover { text-decoration: underline; }
   .contato .ficha { max-width: 24rem; }
-  .mapa { width: 100%; height: 100%; min-height: 340px; border: 0; border-radius: var(--raio); background: var(--nevoa-2); }
+  .mapa {
+    position: relative; display: grid; grid-template-columns: minmax(0, 1fr); place-items: center; width: 100%; height: 100%; min-height: 340px; padding: clamp(.75rem, 4vw, 1.25rem); overflow: hidden; border-radius: var(--raio);
+    /* ruas desenhadas: quadras, e uma avenida na diagonal */
+    background-color: var(--nevoa);
+    background-image:
+      linear-gradient(115deg, transparent 47%, var(--nevoa-2) 47%, var(--nevoa-2) 51%, transparent 51%),
+      repeating-linear-gradient(0deg, transparent 0 54px, var(--nevoa-2) 54px 60px),
+      repeating-linear-gradient(90deg, transparent 0 84px, var(--nevoa-2) 84px 90px);
+  }
+  .mapa-capa { display: grid; justify-items: center; gap: .85rem; max-width: 100%; min-width: 0; padding: clamp(1rem, 4vw, 1.4rem) clamp(.9rem, 4vw, 1.6rem); text-align: center; background: var(--branco); border-radius: var(--raio); box-shadow: var(--sombra); }
+  .mapa-pino { width: 2.25rem; height: 2.25rem; fill: none; stroke: var(--azul); stroke-width: 1.8; }
+  .mapa-endereco { display: grid; gap: .15rem; overflow-wrap: anywhere; }
+  .mapa-endereco strong { font-weight: 600; color: var(--tinta); }
+  .mapa-endereco span { color: var(--tinta-2); }
+  .mapa-quadro { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   @media (max-width: 760px) { .contato-grade { grid-template-columns: 1fr; } .mapa { min-height: 280px; } }
 
   /* ---------- rodape ---------- */
@@ -631,8 +651,13 @@
       <div class="vaga-retrato"><p>Foto da Renata e do Ponta na frente da imobiliária<br><small>(tirar na visita, sem banco de imagem)</small></p></div>
       <div class="sobre-texto">
         <h2 id="titulo-sobre">Uma imobiliária de família, na Praça do Itamarati</h2>
-        <p>Estamos em atividade desde setembro de 2022, e o atendimento é feito pelos próprios sócios: Renata de Carvalho Otero, responsável técnica e avaliadora credenciada, e Carlos “Ponta” Otero.</p>
-        <p>Além da compra, venda e locação, cuidamos do que costuma atrasar uma negociação: regularização de documentos, certidões e impostos pendentes.</p>
+        <p>Desde 2022 em Cravinhos, com atendimento direto dos sócios, Renata e Carlos “Ponta” Otero.</p>
+        <ul class="sobre-servicos">
+          <li><strong>Venda e locação</strong><span>Casas, apartamentos, salas comerciais e lotes.</span></li>
+          <li><strong>Avaliação de imóveis</strong><span>Feita por avaliadora credenciada no CRECI-SP.</span></li>
+          <li><strong>Regularização de documentos</strong><span>Certidões, impostos e pendências que travam a venda ou o aluguel.</span></li>
+          <li><strong>Administração de imóveis</strong><span>Para quem aluga e prefere deixar a gestão com a imobiliária.</span></li>
+        </ul>
         <p class="creci">CRECI-SP 041475-J</p>
       </div>
     </div>
@@ -663,8 +688,14 @@
           </dl>
         </div>
       </div>
-      <iframe class="mapa" title="Mapa: Carvalho e Otero Imóveis na Rua Fernando de Campos Rosa, Cravinhos" loading="lazy"
-        src="https://maps.google.com/maps?q=-21.3389159,-47.7440558&hl=pt-BR&z=17&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <!-- o mapa do Google so carrega no clique: sem cookies de terceiros e pagina mais leve -->
+      <div class="mapa" id="mapa">
+        <div class="mapa-capa">
+          <svg class="mapa-pino" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          <p class="mapa-endereco"><strong>Rua Fernando de Campos Rosa, 15-B</strong><span>Praça do Itamarati, Cravinhos</span></p>
+          <button class="btn" type="button" id="mostrar-mapa">Mostrar mapa</button>
+        </div>
+      </div>
     </div>
   </section>
 </main>
@@ -1155,6 +1186,11 @@ $("#zap-carmelo").href = zap("Olá! Gostaria de informações sobre os lotes do 
 $("#zap-carmelo").target = "_blank";
 $("#zap-carmelo").rel = "noopener";
 $("#vazio-zap").href = geral;
+$("#mostrar-mapa").addEventListener("click", () => {
+  $("#mapa").innerHTML = '<iframe class="mapa-quadro" title="Mapa: Carvalho e Otero Imóveis na Rua Fernando de Campos Rosa, Cravinhos" ' +
+    'src="https://maps.google.com/maps?q=-21.3389159,-47.7440558&hl=pt-BR&z=17&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe>';
+  $("#mapa iframe").focus();
+});
 $("#form-avaliar").addEventListener("input", (e) => e.target.setCustomValidity?.(""));
 $("#filtros").addEventListener("submit", (e) => e.preventDefault());
 $("#form-avaliar").addEventListener("submit", (e) => {
