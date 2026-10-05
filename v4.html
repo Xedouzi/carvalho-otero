@@ -154,7 +154,12 @@
     content: ""; position: absolute; inset: 0; z-index: -1;
     background: linear-gradient(90deg, rgba(var(--veu-rgb), .8) 0%, rgba(var(--veu-rgb), .62) 45%, rgba(var(--veu-rgb), .3) 100%);
   }
-  @media (max-width: 860px) { .abertura::after { background: rgba(var(--veu-rgb), .66); } }
+  @media (max-width: 860px) {
+    .abertura::after { background: rgba(var(--veu-rgb), .66); }
+    /* no celular a abertura e alta (busca empilhada): as fotos cobrem so a parte do titulo e somem no azul,
+       senao cada faixa teria 150 x 1450px e ficaria borrada */
+    .abertura-fotos { bottom: auto; height: min(100%, 40rem); -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
+  }
   .abertura-conteudo { padding-block: clamp(3.5rem, 9vw, 7rem) clamp(2.5rem, 6vw, 4.5rem); display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
   .abertura h1 { font-size: clamp(2.8rem, 1.5rem + 4.8vw, 5.6rem); line-height: 1.03; letter-spacing: -.01em; max-width: 10.5em; text-shadow: 0 1px 18px rgba(0, 0, 0, .25); }
   .abertura-conteudo > p:not(.abertura-extra) { font-size: clamp(1.2rem, 1.05rem + .55vw, 1.5rem); max-width: 26em; color: #EEF3F8; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
@@ -515,7 +520,16 @@
 </header>
 
 <section class="abertura" aria-labelledby="titulo-abertura">
-  <ul class="abertura-fotos" id="abertura-fotos" aria-hidden="true"></ul>
+  <!-- fotos ilustrativas do Unsplash (licenca livre, uso comercial permitido); nao sao imoveis da carteira.
+       Autores: Douglas Mendes, Alef Morais, Jonathan Borba, Rafael Sales, Puscas Adryan, Mauro Lima -->
+  <ul class="abertura-fotos" aria-hidden="true">
+    <li><img src="img/abertura-1.webp" width="600" height="1300" alt="" fetchpriority="high"></li>
+    <li><img src="img/abertura-2.webp" width="600" height="1300" alt="" fetchpriority="high"></li>
+    <li><img src="img/abertura-3.webp" width="600" height="1300" alt="" fetchpriority="high"></li>
+    <li><img src="img/abertura-4.webp" width="600" height="1300" alt=""></li>
+    <li><img src="img/abertura-5.webp" width="600" height="1300" alt=""></li>
+    <li><img src="img/abertura-6.webp" width="600" height="1300" alt=""></li>
+  </ul>
   <div class="envoltorio abertura-conteudo">
     <h1 id="titulo-abertura">Imóveis para alugar e comprar em Cravinhos</h1>
     <p>Casas, apartamentos e salas comerciais com fotos, valores e atendimento direto pelo WhatsApp.</p>
@@ -1145,10 +1159,8 @@ function lerEndereco() {
 }
 window.addEventListener("hashchange", lerEndereco);
 
-/* ---------- abertura: as fotos dos imoveis (as mais nitidas primeiro) e a busca ---------- */
+/* ---------- abertura: opcoes da busca ---------- */
 function montarAbertura() {
-  const fotos = IMOVEIS.map((im) => im.fotos[0]).filter((f) => f.w >= 280).sort((a, b) => b.w - a.w).slice(0, 8);
-  $("#abertura-fotos").innerHTML = fotos.map((f, i) => `<li><img src="${f.src}" width="${f.w}" height="${f.h}" alt=""${i < 4 ? ' fetchpriority="high"' : ' loading="lazy"'}></li>`).join("");
   $("#b-tipo").insertAdjacentHTML("beforeend", [...new Set(IMOVEIS.map((im) => im.tipo))].map((t) => `<option value="${esc(t)}">${esc(t)}</option>`).join(""));
 }
 function lerBusca() {
