@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#111922" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="only light">
+<meta name="theme-color" content="#FFFFFF">
+<!-- o site e sempre claro: a extensao Dark Reader nao mexe -->
+<meta name="darkreader-lock">
 <title>Carvalho e Otero Imóveis | Casas e salas para alugar e comprar em Cravinhos, SP</title>
 <meta name="description" content="Imóveis para alugar e comprar em Cravinhos: casas, apartamentos e salas comerciais. Avaliação de imóveis e regularização de documentos. CRECI 041475-J.">
 <!-- DEMO: remover a linha abaixo quando publicar no dominio definitivo do cliente -->
@@ -31,6 +32,7 @@
      (#184971 no miolo, #9AC5E8 no brilho). Base branca com nevoa azul.
      ============================================================ */
   :root {
+    color-scheme: only light;
     --branco:  #FFFFFF;
     --nevoa:   #EEF3F8;   /* azul do logo bem diluido: secoes alternadas */
     --nevoa-2: #DBE5EF;
@@ -55,24 +57,6 @@
     --margem: clamp(16px, 4vw, 40px);
     --raio: 12px;
     --raio-p: 8px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --branco:  #111922;
-      --nevoa:   #17222E;
-      --nevoa-2: #22344A;
-      --tinta:   #E9EDF1;
-      --tinta-2: #A9B4BF;
-      --azul:    #9AC5E8;   /* o brilho do filete vira o destaque no escuro */
-      --azul-forte: #C2DCF1;
-      --sobre-azul: #0E1A26;
-      --linha:   #2A3949;
-      --contorno: #6A7C8E;
-      --amarelo: #4A3F0C;
-      --amarelo-borda: #E2C447;
-      --sombra:  0 1px 2px rgba(0, 0, 0, .3);
-      --sombra-dialogo: 0 24px 60px rgba(0, 0, 0, .55);
-    }
   }
 
   /* fontes de reserva com a mesma largura das do Google, pra pagina nao pular quando a fonte chega */
